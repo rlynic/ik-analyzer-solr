@@ -93,4 +93,18 @@ public interface Configuration {
      */
     List<String> getExtStopWordDictionarys();
 
+    /**
+     * 获取是否是单字符模式
+     *
+     * @return 单字符模式
+     */
+    boolean isSingleChar();
+
+    /**
+     * 设置是否是单字符模式
+     *
+     * @param singleChar
+     */
+    void setSingleChar(boolean singleChar);
+
 }

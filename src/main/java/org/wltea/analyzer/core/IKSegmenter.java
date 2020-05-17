@@ -52,7 +52,6 @@ public final class IKSegmenter {
     //分词歧义裁决器
     private IKArbitrator arbitrator;
 
-
     /**
      * IK分词器构造函数
      *
@@ -62,9 +61,23 @@ public final class IKSegmenter {
      *                 智能分词： 合并数词和量词，对分词结果进行歧义判断
      */
     public IKSegmenter(Reader input, boolean useSmart) {
+        this(input, useSmart, false);
+    }
+
+    /**
+     * IK分词器构造函数
+     *
+     * @param input    读取流
+     * @param useSmart 为true，使用智能分词策略
+     *                 非智能分词：细粒度输出所有可能的切分结果
+     *                 智能分词： 合并数词和量词，对分词结果进行歧义判断
+     * @param singleChar 为true，使用单字符模式
+     */
+    public IKSegmenter(Reader input, boolean useSmart, boolean singleChar) {
         this.input = input;
         this.cfg = DefaultConfig.getInstance();
         this.cfg.setUseSmart(useSmart);
+        this.cfg.setSingleChar(singleChar);
         this.init();
     }
 
@@ -134,9 +147,11 @@ public final class IKSegmenter {
                 //初始化指针
                 context.initCursor();
                 do {
-                    //遍历子分词器
-                    for (ISegmenter segmenter : segmenters) {
-                        segmenter.analyze(context);
+                    if(!cfg.isSingleChar()){
+                        //遍历子分词器
+                        for (ISegmenter segmenter : segmenters) {
+                            segmenter.analyze(context);
+                        }
                     }
                     //字符缓冲区接近读完，需要读入新的字符
                     if (context.needRefillBuffer()) {

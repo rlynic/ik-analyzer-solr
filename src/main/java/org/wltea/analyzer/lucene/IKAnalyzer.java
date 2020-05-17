@@ -37,6 +37,7 @@ import org.apache.lucene.analysis.Tokenizer;
 public final class IKAnalyzer extends Analyzer {
 
     private boolean useSmart;
+    private boolean singleChar = false;
 
     private boolean useSmart() {
         return useSmart;
@@ -57,8 +58,13 @@ public final class IKAnalyzer extends Analyzer {
      * @param useSmart 当为true时，分词器进行智能切分
      */
     public IKAnalyzer(boolean useSmart) {
+        this(useSmart, false);
+    }
+
+    public IKAnalyzer(boolean useSmart, boolean singleChar) {
         super();
         this.useSmart = useSmart;
+        this.singleChar = singleChar;
     }
 
     /**
@@ -66,7 +72,7 @@ public final class IKAnalyzer extends Analyzer {
      */
     @Override
     protected TokenStreamComponents createComponents(String fieldName) {
-        Tokenizer _IKTokenizer = new IKTokenizer(this.useSmart());
+        Tokenizer _IKTokenizer = new IKTokenizer(this.useSmart(), this.singleChar);
         return new TokenStreamComponents(_IKTokenizer);
     }
 

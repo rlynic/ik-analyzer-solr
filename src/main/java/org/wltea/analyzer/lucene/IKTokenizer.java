@@ -64,8 +64,12 @@ public final class IKTokenizer extends Tokenizer {
     }
 
     IKTokenizer(boolean useSmart) {
+        this(useSmart, false);
+    }
+
+    IKTokenizer(boolean useSmart, boolean singleChar) {
         super();
-        init(useSmart);
+        init(useSmart, singleChar);
     }
 
     public IKTokenizer(AttributeFactory factory) {
@@ -77,11 +81,20 @@ public final class IKTokenizer extends Tokenizer {
         init(useSmart);
     }
 
+    IKTokenizer(AttributeFactory factory, boolean useSmart, boolean singleChar) {
+        super(factory);
+        init(useSmart, singleChar);
+    }
+
     private void init(boolean useSmart) {
+        init(useSmart, false);
+    }
+
+    private void init(boolean useSmart, boolean singleChar) {
         offsetAtt = addAttribute(OffsetAttribute.class);
         termAtt = addAttribute(CharTermAttribute.class);
         typeAtt = addAttribute(TypeAttribute.class);
-        _IKImplement = new IKSegmenter(input, useSmart);
+        _IKImplement = new IKSegmenter(input, useSmart, singleChar);
     }
 
     /* (non-Javadoc)

@@ -65,10 +65,12 @@ public class LuceneIndexAndSearchDemo {
         //Lucene Document的域名
         String fieldName = "text";
         //检索内容
-        String text = "IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
+        String text = "IK Ana123lyzer是23一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 
         //实例化IKAnalyzer分词器
-        Analyzer analyzer = new IKAnalyzer(true);
+        Analyzer analyzer = new IKAnalyzer(false, true);
+
+        Analyzer qAnalyzer = new IKAnalyzer(true, true);
 
         Directory directory = null;
         IndexWriter iwriter;
@@ -95,9 +97,9 @@ public class LuceneIndexAndSearchDemo {
             ireader = DirectoryReader.open(directory);
             isearcher = new IndexSearcher(ireader);
 
-            String keyword = "中文分词工具包";
+            String keyword = "\"3lyzer是2\"";
             //使用QueryParser查询分析器构造Query对象
-            QueryParser qp = new QueryParser(fieldName, analyzer);
+            QueryParser qp = new QueryParser(fieldName, qAnalyzer);
             qp.setDefaultOperator(QueryParser.AND_OPERATOR);
             Query query = qp.parse(keyword);
             System.out.println("Query = " + query);

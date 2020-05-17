@@ -48,21 +48,24 @@ import java.util.*;
  */
 public class IKTokenizerFactory extends TokenizerFactory implements ResourceLoaderAware, UpdateThread.UpdateJob {
     private boolean useSmart;
+    private boolean singleChar;
     private ResourceLoader loader;
     private long lastUpdateTime = -1L;
-    private String conf = "ik.conf";
+    private String conf = "ik/ik.conf";
 
     public IKTokenizerFactory(Map<String, String> args) {
         super(args);
         String useSmartArg = args.get("useSmart");
+        String singleChar = args.get("singleChar");
         String confArg = args.get("conf");
+        this.singleChar =  Boolean.parseBoolean(singleChar);
         this.setUseSmart(Boolean.parseBoolean(useSmartArg));
         this.setConf(confArg);
     }
 
     @Override
     public Tokenizer create(AttributeFactory factory) {
-        return new IKTokenizer(factory, useSmart());
+        return new IKTokenizer(factory, useSmart(), this.singleChar);
     }
 
     /**

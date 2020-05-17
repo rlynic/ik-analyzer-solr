@@ -27,16 +27,12 @@
  */
 package org.wltea.analyzer.core;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-
 import org.wltea.analyzer.cfg.Configuration;
 import org.wltea.analyzer.dic.Dictionary;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.*;
 
 /**
  * 分词器上下文状态
@@ -298,6 +294,12 @@ class AnalyzeContext {
             this.results.add(singleCharLexeme);
         } else if (CharacterUtil.CHAR_OTHER_CJK == this.charTypes[index]) {
             Lexeme singleCharLexeme = new Lexeme(this.buffOffset, index, 1, Lexeme.TYPE_OTHER_CJK);
+            this.results.add(singleCharLexeme);
+        } else if (CharacterUtil.CHAR_ENGLISH == this.charTypes[index]) {
+            Lexeme singleCharLexeme = new Lexeme(this.buffOffset, index, 1, Lexeme.TYPE_LETTER);
+            this.results.add(singleCharLexeme);
+        } else if (CharacterUtil.CHAR_ARABIC == this.charTypes[index]) {
+            Lexeme singleCharLexeme = new Lexeme(this.buffOffset, index, 1, Lexeme.TYPE_ARABIC);
             this.results.add(singleCharLexeme);
         }
     }

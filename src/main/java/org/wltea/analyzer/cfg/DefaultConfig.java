@@ -41,19 +41,21 @@ public class DefaultConfig implements Configuration {
     /*
      * 分词器默认字典路径
      */
-    private static final String PATH_DIC_MAIN = "dict/magese.dic";
-    private static final String PATH_DIC_QUANTIFIER = "dict/quantifier.dic";
+    private static final String PATH_DIC_MAIN = "ik/dict/magese.dic";
+    private static final String PATH_DIC_QUANTIFIER = "ik/dict/quantifier.dic";
 
     /*
      * 分词器配置文件路径
      */
-    private static final String FILE_NAME = "IKAnalyzer.cfg.xml";
+    private static final String FILE_NAME = "ik/IKAnalyzer.cfg.xml";
     // 配置属性——是否使用主词典
     private static final String USE_MAIN = "use_main_dict";
     // 配置属性——扩展字典
     private static final String EXT_DICT = "ext_dict";
     // 配置属性——扩展停止词典
     private static final String EXT_STOP = "ext_stopwords";
+    // 配置是否单字符模式
+    private static final String SINGLE_CHAR = "single_char";
 
     private Properties props;
 
@@ -63,6 +65,8 @@ public class DefaultConfig implements Configuration {
     // 是否加载主词典
     private boolean useMainDict = true;
 
+    // 是否以单字符模式
+    private boolean singleChar = false;
     /**
      * 返回单例
      *
@@ -147,6 +151,15 @@ public class DefaultConfig implements Configuration {
      */
     public String getQuantifierDicionary() {
         return PATH_DIC_QUANTIFIER;
+    }
+
+
+    public boolean isSingleChar() {
+        return singleChar;
+    }
+
+    public void setSingleChar(boolean singleChar) {
+        this.singleChar = singleChar;
     }
 
     /**

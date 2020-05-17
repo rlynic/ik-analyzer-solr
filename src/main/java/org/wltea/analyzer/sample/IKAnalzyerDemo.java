@@ -45,12 +45,12 @@ public class IKAnalzyerDemo {
 
     public static void main(String[] args) {
         //构建IK分词器，使用smart分词模式
-        Analyzer analyzer = new IKAnalyzer(true);
+        Analyzer analyzer = new IKAnalyzer(true, true);
 
         //获取Lucene的TokenStream对象
         TokenStream ts = null;
         try {
-            ts = analyzer.tokenStream("myfield", new StringReader("这是一个中文分词的例子，你可以直接运行它！IKAnalyer can analysis english text too"));
+            ts = analyzer.tokenStream("myfield", new StringReader("IK Ana123lyzer是23一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。"));
             //获取词元位置属性
             OffsetAttribute offset = ts.addAttribute(OffsetAttribute.class);
             //获取词元文本属性
